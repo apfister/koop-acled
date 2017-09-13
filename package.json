@@ -1,0 +1,12 @@
+{
+  "name": "koop-acled",
+  "version": "1.0.0",
+  "description": "Koop Provider for ACLED database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Adam Pfister",
+  "license": "Apache-2.0"
+}
