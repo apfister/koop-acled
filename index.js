@@ -9,7 +9,8 @@
 const provider = {
   type: 'provider',
   name: 'acled',
-  hosts: true,
+  hosts: false,
+  disableIdParam:true,
   Controller: require('./controller'),
   Model: require('./model'),
   routes: require('./routes'),

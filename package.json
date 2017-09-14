@@ -8,5 +8,9 @@
     "start": "node server.js"
   },
   "author": "Adam Pfister",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "koop": "^3.5.2"
+  }
 }

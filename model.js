@@ -5,7 +5,14 @@
 
   Documentation: http://koopjs.github.io/docs/specs/provider/
 */
-require('dotenv').config();
+const config = require('config');
+
+const fs = require('fs');
+const AdmZip = require('adm-zip');
+const http = require('http');
+const url = require('url');
+const csv2geojson = require('csv2geojson');
+const nodeDateTime = require('node-datetime');
 
 const request = require('request').defaults({gzip: true, json: true});
 
@@ -13,38 +20,60 @@ function Model (koop) {}
 
 Model.prototype.getData = function (req, callback) {
 
-  // get today's date
-  const rightNow = new Date();
+  const file_url = config.urls.latest;
 
-  const rightNowFormatted = formatDate(rightNow);
+  const options = {
+    host: url.parse(file_url).host,
+    port: 80,
+    path: url.parse(file_url).pathname
+  };
 
-  // check to see if latest data is cached
-  // if cached -> return that;
-  // if not cached -> request;
-  if (koop.cache[rightNowFormatted]) {
-    callback( null, koop.cache[rightNowFormatted] );
-  } else {
-    const url = config.urls.latest;
+  http.get(options, null, (res) => {
+    let data = [], dataLen = 0;
 
-    request(url, (err, res, body) => {
-      if (err || (res.statusCode > 400 && res.statusCode < 600)) {
-        return callback({
-          message: 'error requesting data from acled',
-          status_code: res.statusCode
+    res
+      .on('data', (chunk) => {
+        data.push(chunk);
+        dataLen += chunk.length;
+      })
+      .on('end', ()  => {
+        console.log('done getting data ..');
+        console.log('dataLen', dataLen);
+
+        const buf = new Buffer(dataLen);
+
+        for (let i=0, len = data.length, pos = 0; i < len; i++) {
+            data[i].copy(buf, pos);
+            pos += data[i].length;
+        }
+
+        const zip = new AdmZip(buf);
+
+        const zipEntries = zip.getEntries();
+
+        // console.log(zipEntries.length);
+
+        const csvString = zip.readAsText(zipEntries[0]);
+
+        csv2geojson.csv2geojson(csvString, {
+          latfield: 'LATITUDE',
+          lonfield: 'LONGITUDE',
+          delimiter: ','
+        }, function(err, data) {
+
+          const rightNow = nodeDateTime.create().format('Y-m-d H:M:S');
+          console.log(rightNow);
+
+          data.features.forEach( (feature) => {
+            feature.attributes.DATETIME_IMPORTED = rightNow;
+          });
+
+          callback( null, data );
+          // fs.writeFileSync('out2.json', JSON.stringify(data));
         });
-      }
 
-      data = translateCsvToGeoJson(body);
-
-      callback( null, data);
-
-    });
-  }
+      });
+  });
 }
 
-function translateCsvToGeoJson (raw) {
-    // convert to csv object
-
-    // convert to GeoJson
-    return geojson;
-}
+module.exports = Model;
