@@ -6,8 +6,8 @@ process.on('SIGTERM', () => process.exit(0))
 
 const express = require('express');
 const app = express();
-const router = express.Router();
-const path = require('path');
+// const router = express.Router();
+// const path = require('path');
 
 // Initialize Koop
 const Koop = require('koop');
@@ -21,9 +21,10 @@ koop.register(provider);
 
 const port = process.env.PORT || 3000;
 
-app.use(koop.server);
+// app.use(koop.server);
 
-app.listen(port, (err) => {
+
+koop.server.listen(port, (err) => {
   const message = `
 
   Now listening on ${port}
