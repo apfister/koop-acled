@@ -33,7 +33,9 @@ app.listen(port, (err) => {
   `
   console.log(message);
 
-  console.log('process.env.PORT', process.env.PORT);
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+  // console.log('process.env.PORT', process.env.PORT);
+  // console.log('process.env.REDIS_URL', process.env.REDIS_URL);
+
+  console.log('NODE_CONFIG: ' + config.util.getEnv('HOSTNAME'));
 
 });
