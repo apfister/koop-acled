@@ -1,5 +1,10 @@
 {
   "urls": {
-    "latest" : "http://acled.com/latest"
+    "latest" : "http://www.acleddata.com/wp-content/uploads/2017/09/ACLED-All-Africa-File_20170801-to-20170831_csv.zip"
+  },
+  "cache": {
+    "redis": {
+      "host": "redis://h:pcf63e3a086ce7042832f5b363c8a2521276d3bfe68ddc48baf915aa01aa05a3d@ec2-34-232-55-169.compute-1.amazonaws.com:59009"
+    }
   }
 }

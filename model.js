@@ -18,9 +18,15 @@ const request = require('request').defaults({gzip: true, json: true});
 
 function Model (koop) {}
 
-Model.prototype.getData = function (req, callback) {
+Model.prototype.getAcledLive = function (req, callback) {
+  console.log('getAcledLive');
+  callback(null, {});
+}
 
+Model.prototype.getData = function (req, callback) {
+  console.log('getData');
   const file_url = config.urls.latest;
+  console.log(`requesting csv zip file from: ${file_url}`);
 
   const options = {
     host: url.parse(file_url).host,
@@ -28,7 +34,7 @@ Model.prototype.getData = function (req, callback) {
     path: url.parse(file_url).pathname
   };
 
-  http.get(options, null, (res) => {
+  http.get(options, (res) => {
     let data = [], dataLen = 0;
 
     res
@@ -37,14 +43,11 @@ Model.prototype.getData = function (req, callback) {
         dataLen += chunk.length;
       })
       .on('end', ()  => {
-        console.log('done getting data ..');
-        console.log('dataLen', dataLen);
-
         const buf = new Buffer(dataLen);
 
         for (let i=0, len = data.length, pos = 0; i < len; i++) {
-            data[i].copy(buf, pos);
-            pos += data[i].length;
+          data[i].copy(buf, pos);
+          pos += data[i].length;
         }
 
         const zip = new AdmZip(buf);
@@ -65,14 +68,16 @@ Model.prototype.getData = function (req, callback) {
           console.log(rightNow);
 
           data.features.forEach( (feature) => {
-            feature.attributes.DATETIME_IMPORTED = rightNow;
+            feature.properties.DATETIME_IMPORTED = rightNow;
           });
 
           callback( null, data );
-          // fs.writeFileSync('out2.json', JSON.stringify(data));
         });
 
       });
+  })
+  .on('error', (error) => {
+    console.log('error', error);
   });
 }
 

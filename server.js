@@ -1,4 +1,4 @@
-require('dotenv').config();
+const config = require('config');
 
 // clean shutdown on `cntrl + c`
 process.on('SIGINT', () => process.exit(0))
@@ -13,6 +13,9 @@ const path = require('path');
 const Koop = require('koop');
 const koop = new Koop();
 
+const cache = require('@koopjs/cache-redis');
+koop.register(cache);
+
 const provider = require('./');
 koop.register(provider);
 
@@ -23,14 +26,14 @@ app.use(koop.server);
 app.listen(port, (err) => {
   const message = `
 
-  SDG API listening on ${port}
+  Now listening on ${port}
   For more docs visit: https://koopjs.github.io/docs/specs/provider/
-
-  Try it out in your browser: http://localhost:${port}/sdgs/goals/1
-  Or on the command line: curl --silent http://localhost:${port}/sample/FeatureServer/0/query?returnCountOnly=true
 
   Press control + c to exit
   `
   console.log(message);
-  
+
+  console.log('process.env.PORT', process.env.PORT);
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+
 });

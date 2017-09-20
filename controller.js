@@ -8,11 +8,12 @@
 */
 
 function Controller (model) {
-  this.model = model
+  this.model = model;
 }
 
-Controller.prototype.getACLED = function (req, res) {
-  this.model.getData(req, (err, resource) => {
+Controller.prototype.getACLEDLive = function (req, res) {
+  console.log('are we here?');
+  this.model.getAcledLive(req, (err, resource) => {
     if (err) res.status(500 || err.code).json({error: err})
     else res.json( resource )
   })

@@ -6,9 +6,9 @@
 */
 module.exports = [
   {
-    path: '/acled',
+    path: '/acled/live',
     methods: [ 'get', 'post' ],
-    handler: 'getACLED'
+    handler: 'getACLEDLive'
   }
   // possible more routes for historic data?
 ];
