@@ -1,0 +1,7 @@
+{
+  "cache": {
+    "redis": {
+      "host": "REDIS_URL"
+    }
+  }
+}
