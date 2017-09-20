@@ -23,7 +23,6 @@ const port = process.env.PORT || 3000;
 
 // app.use(koop.server);
 
-
 koop.server.listen(port, (err) => {
   const message = `
 
@@ -35,8 +34,6 @@ koop.server.listen(port, (err) => {
   console.log(message);
 
   // console.log('process.env.PORT', process.env.PORT);
-  // console.log('process.env.REDIS_URL', process.env.REDIS_URL);
-
-  console.log('NODE_CONFIG: ' + config.util.getEnv('HOSTNAME'));
+  console.log('process.env.REDIS_URL', process.env.REDIS_URL);
 
 });
