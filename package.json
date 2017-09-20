@@ -8,7 +8,7 @@
     "start": "node server.js"
   },
   "engines": {
-    "node": "8.5.0"
+    "node": "6.11.3"
   },
   "author": "Adam Pfister",
   "license": "Apache-2.0",
