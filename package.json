@@ -9,7 +9,7 @@
   },
   "engines": {
     "node": "8.5.0"
-  }
+  },
   "author": "Adam Pfister",
   "license": "Apache-2.0",
   "dependencies": {
