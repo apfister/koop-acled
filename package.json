@@ -15,10 +15,8 @@
   "dependencies": {
     "@koopjs/cache-redis": "^1.0.1",
     "adm-zip": "^0.4.7",
-    "csv2geojson": "^5.0.2",
     "dotenv": "^4.0.0",
     "koop": "^3.5.2",
-    "moment": "^2.18.1",
-    "node-datetime": "^2.0.3"
+    "moment": "^2.18.1"
   }
 }
