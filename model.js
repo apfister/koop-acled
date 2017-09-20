@@ -8,10 +8,10 @@
 const config = require('config');
 
 const fs = require('fs');
-const AdmZip = require('adm-zip');
+// const AdmZip = require('adm-zip');
 const http = require('http');
 const url = require('url');
-const csv2geojson = require('csv2geojson');
+// const csv2geojson = require('csv2geojson');
 const moment = require('moment');
 
 const request = require('request').defaults({gzip: true, json: true});
